@@ -6,7 +6,9 @@ public class Items {
 
     private Double price;
 
-    private int stock;
+    public int stock;
+    
+    private String out;
 
     public Items(){
 
@@ -23,8 +25,15 @@ public class Items {
         this.stock+=add;
     }
 
-    public void reduce_stock(int add){
+    public String reduce_stock(int add){
         this.stock-=add;
+        
+        out = "Out of Stock. Please check the number of stocks";
+        if (this.stock < 0)
+        {
+        	System.out.println(out);
+        }
+		return name;
     }
 
     public String getName() {

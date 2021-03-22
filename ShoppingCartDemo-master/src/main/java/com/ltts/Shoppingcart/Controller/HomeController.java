@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
+@SessionAttributes("personObj")
 @RequestMapping("/shopping")
 public class HomeController {
 
@@ -29,12 +30,14 @@ public class HomeController {
         shoppingCart.add_item(new Items("Juice",45.5,120));
         shoppingCart.add_item(new Items("Shampoo",122.5,520));
         shoppingCart.add_item(new Items("Biscuits",12.5,320));
-        shoppingCart.add_customer(new Customer("Dinesh","12457854",new Basket()));
-        shoppingCart.add_customer(new Customer("Pankaj","87417854",new Basket()));
-        shoppingCart.add_customer(new Customer("Praveen","958417854",new Basket()));
+        shoppingCart.add_item(new Items("Rusk",60.0,320));
+        shoppingCart.add_customer(new Customer("Abhishek","1234567890",new Basket()));
+        shoppingCart.add_customer(new Customer("Akash","987654321",new Basket()));
+        shoppingCart.add_customer(new Customer("Sai","958417854",new Basket()));
     }
 
     @GetMapping("/init")
+    @RequestMapping(value="/init")
     public String homepage(Model  model){
 
         model.addAttribute("customers",shoppingCart.getCustomers());
@@ -93,11 +96,16 @@ public class HomeController {
     }
 
     @GetMapping("/additems")
-    public String add_item(Model model){
+    public String add_item(Model model,@ModelAttribute("Item")Items item){
         model.addAttribute("Item",new Items());
         return "item_form";
+        
+		/*
+		 * if (item.getStock() < 0) { item.setStock(item.getStock());
+		 * System.out.println("OUT OF STOCK"); }
+		 */
+        
     }
-
     @GetMapping("/items")
     public String listitems(Model model){
         model.addAttribute("Items",shoppingCart.getItems());
